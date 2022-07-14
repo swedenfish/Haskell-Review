@@ -1,4 +1,5 @@
 import Prelude hiding (null,head,tail,length,elem,(!!),(++),take,drop,zip,unzip,sum,splitAt,reverse)
+import Data.Char
 --Examples in slides
 
 ints :: Int -> [Int]
@@ -181,4 +182,20 @@ substring s1 s2 = substring' s1 s2 (length s1)
             | otherwise = substring' s1 ss n
 
 --Q7
---transpose ::
+transpose :: String -> String -> String -> String
+transpose _ _ [] = []
+transpose s xss (y:ys) = s !! (pos y' xss') : (transpose s xss ys)
+    where y' = ord y
+          xss' = toIntList xss
+
+toIntList :: String -> [Int]
+toIntList s = map ord s
+
+
+--Q8
+removeWhitespace :: String -> String
+removeWhitespace [] = []
+removeWhitespace (x:xs)
+    | isSpace x = removeWhitespace xs
+    | otherwise = (x:xs)
+
