@@ -1,5 +1,7 @@
+import qualified Data.List
 import Prelude hiding (null,head,tail,length,elem,(!!),(++),take,drop,zip,unzip,sum,splitAt,reverse)
 import Data.Char
+
 --Examples in slides
 
 ints :: Int -> [Int]
@@ -214,3 +216,59 @@ splitUp [] = []
 splitUp s = word : (splitUp remain)
     where
         (word, remain) = nextWord (removeWhitespace s)
+
+
+
+--Q11
+
+{-
+primeFactors :: Int -> [Int]
+primeFactors 1 = []
+primeFactors n =  factors ++ (primeFactors remain)
+where
+    (factors, remain) = divideTotally n factor
+        where
+            factor = 
+-}
+
+
+divideTotally :: Int -> Int -> ([Int], Int)
+divideTotally n m
+    | mod n m == 0 = (m:factors,remain)
+    | otherwise = ([],n)
+        where (factors,remain) = divideTotally (n `div` m) m
+
+
+-- From chapter2 Q5
+isPrime :: Int -> Bool
+isPrime x 
+  | x > 1 = isPrime' x 2
+  | otherwise = False
+  where
+    isPrime' x n
+      -- | n == x = True
+      | n > bound = True
+      | otherwise = (mod x n) /= 0 && isPrime' x (n+1)
+      where 
+        bound = round (sqrt (fromIntegral x))
+
+
+primeFactors :: Int -> [Int]
+primeFactors n = primeFactors' n 2
+
+primeFactors' 1 _ = []
+primeFactors' n m
+    | mod n m == 0 = m : (primeFactors' (n `div` m) m)
+    | otherwise = primeFactors' n (m+1)
+
+
+--Q12
+hcf :: Int -> Int -> Int
+hcf n1 n2 = n1 `div` (product' remain)
+    where
+        remain = (primeFactors n1) Data.List.\\ (primeFactors n2)
+
+product' :: [Int] -> Int
+product' [] = 1
+product' (x:xs) = x * product' xs
+
