@@ -201,9 +201,16 @@ removeWhitespace (x:xs)
 
 --Q9
 nextWord :: String -> (String, String)
+nextWord [] = ([],[])
 nextWord (x:xs)
     | isSpace x = ([],xs)
     | otherwise = (x:word,remain)
         where
             (word,remain) = nextWord xs
 
+--Q10
+splitUp :: String -> [String]
+splitUp [] = []
+splitUp s = word : (splitUp remain)
+    where
+        (word, remain) = nextWord (removeWhitespace s)
