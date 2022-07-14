@@ -199,3 +199,11 @@ removeWhitespace (x:xs)
     | isSpace x = removeWhitespace xs
     | otherwise = (x:xs)
 
+--Q9
+nextWord :: String -> (String, String)
+nextWord (x:xs)
+    | isSpace x = ([],xs)
+    | otherwise = (x:word,remain)
+        where
+            (word,remain) = nextWord xs
+
