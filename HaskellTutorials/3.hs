@@ -1,5 +1,5 @@
 import qualified Data.List
-import Prelude hiding (null,head,tail,length,elem,(!!),(++),take,drop,zip,unzip,sum,splitAt,reverse)
+import Prelude hiding (null,head,tail,length,elem,(!!),(++),take,drop,zip,unzip,sum,splitAt,reverse,lcm)
 import Data.Char
 
 --Examples in slides
@@ -272,3 +272,8 @@ product' :: [Int] -> Int
 product' [] = 1
 product' (x:xs) = x * product' xs
 
+--Q13
+lcm :: Int -> Int -> Int
+lcm n1 n2
+    | n1 < n2 = n1 * product' ((primeFactors n2) Data.List.\\(primeFactors n1))
+    | otherwise = n2 * product' ((primeFactors n1) Data.List.\\(primeFactors n2))
