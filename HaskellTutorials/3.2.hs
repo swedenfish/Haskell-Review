@@ -1,3 +1,4 @@
+import Data.List
 
 --Q1
 findAll x t = [y | (x',y) <- t, x' == x]
@@ -47,3 +48,20 @@ substrings [] = []
 substrings (x:xs) = prefixes (x:xs) ++ substrings xs
 
 --TODO: funcitional version and list comprehension version
+substrings' :: String -> [String]
+substrings' [] = []
+substrings' list@(x:xs) = [take n list | n <- [1..length list]] ++ substrings' xs
+
+--Q7
+
+--Redo after a while 
+perms :: [Int] -> [[Int]]
+perms [] = [[]]
+perms xs = [x:ps | x <- xs, ps <- perms (xs \\ [x])]
+
+--Q8
+routes :: Int -> Int -> [(Int,Int)] -> [[Int]]
+routes start dest path
+ -- | start == dest = []  这样写一直output[]
+    | start == dest = [[dest]]
+    | otherwise     = [start:paths | next <- findAll start path, paths <- (routes next dest path)]
